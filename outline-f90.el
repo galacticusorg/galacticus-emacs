@@ -1,13 +1,6 @@
 ;; Clean code folding via Outline minor mode.
 (add-hook 'f90plus-mode-hook 'outline-minor-mode)
 
-;; Show all headings but no content in Outline mode.
-(add-hook 'outline-minor-mode-hook
-	  (defun my-outline-overview ()
-	    "Show only outline headings."
-	    (outline-show-all)
-	    (outline-hide-body)))
-
 ;; Tab to "zoom in" on a function, backtab to "zoom out" to the outline.
 (global-set-key (kbd "<f1>") 'outline-toggle-children)
 
