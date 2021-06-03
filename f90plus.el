@@ -1609,7 +1609,9 @@ comment."
   (let (not-first-statement)
     (beginning-of-line)
     (while (and (setq not-first-statement (zerop (forward-line -1)))
-                (looking-at "[ \t0-9]*\\(!\\|$\\|#\\)")))
+                (looking-at "[ \t0-9]*\\(!\\|$\\|#\\)"))      
+      (if (looking-at "[ \t]*!!}") (while (not (looking-at "[ \t]*!!{")) (forward-line -1))) ; Skip over embedded LaTeX blocks
+      (if (looking-at "[ \t]*!!\\]") (while (not (looking-at "[ \t]*!!\\[")) (forward-line -1)))) ; Skip over embedded XML blocks
     not-first-statement))
 
 (defun f90-next-statement ()
