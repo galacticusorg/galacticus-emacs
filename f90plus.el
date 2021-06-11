@@ -1598,7 +1598,37 @@ Does not check type and subprogram indentation."
                                    (f90-looking-at-program-block-end))
                                (setq icol (- icol f90-program-indent))))))))))
     icol))
-
+
+
+
+(defun f90-in-embedded ()
+  "Return non-nil if point is inside an embedded LaTeX or XML block.
+Checks from `point-min', or `f90-cache-position', if that is non-nil
+and lies before point."
+  (save-excursion
+    (save-match-data
+      (let (not-first-statement)
+	(beginning-of-line)
+	(while (and (setq not-first-statement (zerop (forward-line -1)))
+		    (not
+		     (or
+		      (looking-at "[ \t]*!!\\[")
+		      (looking-at "[ \t]*!!\\]")
+		      (looking-at "[ \t]*!!{")
+		      (looking-at "[ \t]*!!}")
+		      )
+		     )
+		    )
+	  )
+	)
+      (or
+       (looking-at "[ \t0-9]*!!\\[")
+       (looking-at "[ \t0-9]*!!{")
+       )
+      )
+    )
+  )
+
 (defun f90-previous-statement ()
   "Move point to beginning of the previous F90 statement.
 If no previous statement is found (i.e. if called from the first
@@ -2215,7 +2245,7 @@ Leave point at the end of line."
 ;;;          (skip-chars-forward " \t")
 ;;;          (skip-chars-forward "0-9")
           (skip-chars-forward " \t0-9")
-          (cond ((or (f90-in-string) (f90-in-comment)))
+          (cond ((or (f90-in-string) (f90-in-comment) (f90-in-embedded)))
                 ((setq matching-beg
                        (or
                         (f90-looking-at-do)
