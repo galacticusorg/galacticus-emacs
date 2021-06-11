@@ -39,7 +39,7 @@
      (texfrag-trac-wiki trac-wiki-mode)
      (texfrag-markdown markdown-mode)
      (texfrag-org org-mode latex-mode f90plus-mode sgml-mode)))) ; Add all modes used in Galacticus source files here so that texfrag can process LaTeX fragments in them
- '(texfrag-subdir "texfrag")
+ '(texfrag-subdir "/home/abensonca/Scratch/texfrag")
  '(tramp-ssh-controlmaster-options
    "-o ControlPath=~/.ssh/control:%%h:%%p:%%r -o ControlMaster=auto -o ControlPersist=yes" t)
  '(vc-follow-symlinks t))
