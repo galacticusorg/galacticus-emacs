@@ -63,34 +63,8 @@
 
 (define-hostmode poly-f90plus-hostmode :mode 'f90plus-mode)
 
-(define-innermode poly-xml-multi-f90plus-innermode
-  :mode 'sgml-mode
-  :head-matcher (rx line-start (* (any space)) "!" (any "#@") space "<" (+ (any alpha)) (*? (not (any "/>"))) ">")
-  :tail-matcher (rx line-start (* (any space)) "!" (any "#@") space "</" (+ (any alpha)) ">")
-  :head-mode 'body
-  :tail-mode 'body
-  )
-
-;; Standard XML match - THIS WILL EVENTUALLY BE DEPRECATED IN FAVOR OF THE PROPOSED BLOCK COMMENT FORM
-(define-innermode poly-xml-single-f90plus-innermode
-  :mode 'sgml-mode
-  :head-matcher (rx line-start (* (any space)) "!"  (any "#@") space "<" (+ (any alpha)) (*? (not (any ">"))) "/>")
-  :tail-matcher (rx "\n")
-  :head-mode 'body
-  :tail-mode 'body
-  )
-
-;; Standard LaTeX match - THIS WILL EVENTUALLY BE DEPRECATED IN FAVOR OF THE PROPOSED BLOCK COMMENT FORM
-(define-innermode poly-latex-expr-f90plus-innermode
-  :mode 'latex-mode
-  :head-matcher (rx line-start (* (any space)) "!%")
-  :tail-matcher (rx line-start (* (any space)) (not (any " !")))
-  :head-mode 'body
-  :tail-mode 'host
-  )
-
-;; Modified XML match that works with a proposed block comment form - THIS WILL EVENTUALLY BECOME THE STANDARD
-(define-innermode poly-xml-mod-f90plus-innermode
+;; Modified XML match that works with a proposed block comment form
+(define-innermode poly-xml-f90plus-innermode
   :mode 'sgml-mode
   :head-matcher (rx line-start (* (any space)) "!![")
   :tail-matcher (rx "!!]" (* (any space)) line-end)
@@ -98,8 +72,8 @@
   :tail-mode 'host
   )
 
-;; Modified LaTeX match that works with a proposed block comment form - THIS WILL EVENTUALLY BECOME THE STANDARD
-(define-innermode poly-latex-mod-f90plus-innermode
+;; Modified LaTeX match that works with a proposed block comment form
+(define-innermode poly-latex-f90plus-innermode
   :mode 'latex-mode
   :head-matcher (rx line-start (* (any space)) "!!{")
   :tail-matcher (rx "!!}" (* (any space)) line-end)
@@ -109,7 +83,7 @@
 
 (define-polymode poly-f90plus-xml-mode
   :hostmode 'poly-f90plus-hostmode
-  :innermodes '(poly-xml-multi-f90plus-innermode poly-xml-single-f90plus-innermode poly-xml-mod-f90plus-innermode poly-latex-expr-f90plus-innermode poly-latex-mod-f90plus-innermode))
+  :innermodes '(poly-xml-f90plus-innermode poly-latex-f90plus-innermode))
 
 (setq max-lisp-eval-depth 10000)
 (setq max-specpdl-size 10000)
