@@ -27,9 +27,9 @@
  '(org-agenda-files (quote ("~/Dropbox/Orgzly/ToDo.org")))
  '(package-selected-packages
    (quote
-    (texfrag use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern)))
- '(preview-gs-command "/home/abensonca/Galacticus/Tools/bin/gs-9540-linux-x86_64") ; GhostScript 9.540 is required to correctly adjust colors of LaTeX preview images to match dark theme
- '(preview-pdf-color-adjust-method t) ; Use LaTeX preview image color adjustment method suitable for GhostScript > 9.270
+    (fringe-helper git-gutter-fringe texfrag use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern)))
+ '(preview-gs-command "/home/abensonca/Galacticus/Tools/bin/gs-9540-linux-x86_64")
+ '(preview-pdf-color-adjust-method t)
  '(texfrag-setup-alist
    (quote
     ((texfrag-html html-mode)
@@ -38,7 +38,7 @@
      (texfrag-prog prog-mode)
      (texfrag-trac-wiki trac-wiki-mode)
      (texfrag-markdown markdown-mode)
-     (texfrag-org org-mode latex-mode f90plus-mode sgml-mode)))) ; Add all modes used in Galacticus source files here so that texfrag can process LaTeX fragments in them
+     (texfrag-org org-mode latex-mode f90plus-mode sgml-mode))))
  '(texfrag-subdir "/home/abensonca/Scratch/texfrag")
  '(tramp-ssh-controlmaster-options
    "-o ControlPath=~/.ssh/control:%%h:%%p:%%r -o ControlMaster=auto -o ControlPersist=yes" t)
@@ -152,3 +152,10 @@ There are two things you can do about this warning:
 
 ;; Set texfrag-mode to be on globally in buffers that support it
 (texfrag-global-mode)
+
+;; Load the git-gutter package
+(require 'git-gutter)
+(global-git-gutter-mode t)
+(global-set-key (kbd "C-x C-g") 'git-gutter)
+(custom-set-variables
+ '(git-gutter:update-interval 10))
