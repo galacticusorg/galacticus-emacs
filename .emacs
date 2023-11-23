@@ -24,10 +24,11 @@
  '(fortran-do-indent 1)
  '(fortran-if-indent 1)
  '(fortran-structure-indent 1)
- '(org-agenda-files (quote ("~/Dropbox/Orgzly/ToDo.org")))
+ '(git-gutter:update-interval 10)
+ '(org-agenda-files (quote ("~/Orgzly/ToDo.org")))
  '(package-selected-packages
    (quote
-    (fringe-helper git-gutter-fringe texfrag use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern)))
+    (lsp-mode yaml-mode fringe-helper git-gutter-fringe texfrag use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern)))
  '(preview-gs-command "/home/abensonca/Galacticus/Tools/bin/gs-9540-linux-x86_64")
  '(preview-pdf-color-adjust-method t)
  '(texfrag-setup-alist
@@ -157,5 +158,5 @@ There are two things you can do about this warning:
 (require 'git-gutter)
 (global-git-gutter-mode t)
 (global-set-key (kbd "C-x C-g") 'git-gutter)
-(custom-set-variables
- '(git-gutter:update-interval 10))
+
+(put 'narrow-to-region 'disabled nil)
