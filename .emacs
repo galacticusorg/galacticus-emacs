@@ -158,5 +158,6 @@ There are two things you can do about this warning:
 (require 'git-gutter)
 (global-git-gutter-mode t)
 (global-set-key (kbd "C-x C-g") 'git-gutter)
+(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
 
 (put 'narrow-to-region 'disabled nil)
