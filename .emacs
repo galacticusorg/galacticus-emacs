@@ -10,6 +10,11 @@
 (add-to-list 'load-path "~/.emacs.d/progmodes/")
 (require 'f90plus)
 (require 'outline-f90)
+(require 'package)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
 
 ;; enable visual feedback on selections
 (setq transient-mark-mode t)
@@ -18,32 +23,31 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(f90-break-delimiters "[-+\\*/><=, 	]")
+ '(f90-break-delimiters "[-+\\*/><=, \11]")
  '(fill-column 130)
  '(fortran-continuation-indent 1)
  '(fortran-do-indent 1)
  '(fortran-if-indent 1)
  '(fortran-structure-indent 1)
- '(git-gutter:update-interval 10)
- '(org-agenda-files (quote ("~/Orgzly/ToDo.org")))
+ '(org-agenda-files '("~/Orgzly/ToDo.org"))
  '(package-selected-packages
-   (quote
-    (lsp-mode yaml-mode fringe-helper git-gutter-fringe texfrag use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern)))
+   '(apache-mode async bar-cursor bm boxquote browse-kill-ring company csv-mode diminish eproject folding graphviz-dot-mode helm helm-core htmlize initsplit session tabbar org texfrag melpa-upstream-visit git-gutter lsp-mode yaml-mode fringe-helper use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern))
  '(preview-gs-command "/home/abensonca/Galacticus/Tools/bin/gs-9540-linux-x86_64")
  '(preview-pdf-color-adjust-method t)
  '(texfrag-setup-alist
-   (quote
-    ((texfrag-html html-mode)
+   '((texfrag-html html-mode)
      (texfrag-eww eww-mode)
      (texfrag-sx sx-question-mode)
      (texfrag-prog prog-mode)
      (texfrag-trac-wiki trac-wiki-mode)
      (texfrag-markdown markdown-mode)
-     (texfrag-org org-mode latex-mode f90plus-mode sgml-mode))))
+     (texfrag-org org-mode latex-mode sgml-mode)))
  '(texfrag-subdir "/home/abensonca/Scratch/texfrag")
  '(tramp-ssh-controlmaster-options
    "-o ControlPath=~/.ssh/control:%%h:%%p:%%r -o ControlMaster=auto -o ControlPersist=yes" t)
- '(vc-follow-symlinks t))
+ '(vc-follow-symlinks t)
+ '(warning-suppress-log-types '((org-element-cache)))
+ '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
