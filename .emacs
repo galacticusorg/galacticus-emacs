@@ -23,15 +23,19 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(diff-hl-async-inhibit-functions '(diff-hl-with-editor-p file-remote-p))
+ '(diff-hl-disable-on-remote nil)
+ '(diff-hl-update-async t)
  '(f90-break-delimiters "[-+\\*/><=, \11]")
  '(fill-column 130)
  '(fortran-continuation-indent 1)
  '(fortran-do-indent 1)
  '(fortran-if-indent 1)
  '(fortran-structure-indent 1)
+ '(global-diff-hl-mode t)
  '(org-agenda-files '("~/Orgzly/ToDo.org"))
  '(package-selected-packages
-   '(apache-mode async bar-cursor bm boxquote browse-kill-ring company csv-mode diminish eproject folding graphviz-dot-mode helm helm-core htmlize initsplit session tabbar org texfrag melpa-upstream-visit git-gutter lsp-mode yaml-mode fringe-helper use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern))
+   '(diff-hl apache-mode async bar-cursor bm boxquote browse-kill-ring company csv-mode diminish eproject folding graphviz-dot-mode helm helm-core htmlize initsplit session tabbar org texfrag melpa-upstream-visit lsp-mode yaml-mode fringe-helper use-package polymode fortpy f90-interface-browser dockerfile-mode color-theme-modern))
  '(preview-gs-command "/home/abensonca/Galacticus/Tools/bin/gs-9540-linux-x86_64")
  '(preview-pdf-color-adjust-method t)
  '(texfrag-setup-alist
@@ -158,10 +162,15 @@ There are two things you can do about this warning:
 ;; Set texfrag-mode to be on globally in buffers that support it
 (texfrag-global-mode)
 
-;; Load the git-gutter package
-(require 'git-gutter)
-(global-git-gutter-mode t)
-(global-set-key (kbd "C-x C-g") 'git-gutter)
-(global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+;; Load the diff-hl package
+(global-diff-hl-mode)
+;; because I just use git
+(setq vc-handled-backends '(Git)) 
+;; this would allow diff-hl to work over Tramp, but it causes freezes
+(setq vc-ignore-dir-regexp "\\`\\(?:[\\/][\\/][^\\/]+[\\/]\\|/\\(?:net\\|afs\\|\\.\\.\\.\\)/\\)\\'")
+
+;; Ignore tramp reentrant errors.
+(setq debug-ignored-errors
+      (cons 'remote-file-error debug-ignored-errors))
 
 (put 'narrow-to-region 'disabled nil)
