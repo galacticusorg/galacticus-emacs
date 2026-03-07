@@ -859,7 +859,7 @@ Can be overridden by the value of `font-lock-maximum-decoration'.")
 ;; Regexps for finding program structures.
 (defconst f90-blocks-re
   (concat "\\(\\(?:block[ \t]*data\\|"
-          (regexp-opt '("do" "if" "interface" "function" "module procedure" "module" "program"
+          (regexp-opt '("do" "if" "interface" "function" "module" "program"
                         "select" "subroutine" "type" "where" "forall"
                         ;; F2003.
                         "enum" "associate"
@@ -869,7 +869,7 @@ Can be overridden by the value of `font-lock-maximum-decoration'.")
   "Regexp potentially indicating a \"block\" of F90 code.")
 
 (defconst f90-program-block-re
-  (regexp-opt '("program" "module procedure" "module" "subroutine" "function" "submodule") 'paren)
+  (regexp-opt '("program" "module" "subroutine" "function" "submodule") 'paren)
   "Regexp used to locate the start/end of a \"subprogram\".")
 
 ;; "class is" is F2003.
@@ -926,7 +926,7 @@ allowed.  This minor issue currently only affects \"(/\" and \"/)\".")
 (defconst f90-end-block-re
   (concat "^[ \t0-9]*\\_<end[ \t]*"
           (regexp-opt '("do" "if" "forall" "function" "interface"
-                        "module procedure" "module" "program" "select" "subroutine"
+                        "module" "program" "select" "subroutine"
                         "type" "where" "enum" "associate" "submodule"
                         "block" "critical") t)
           "\\_>")
@@ -1369,9 +1369,8 @@ write\\)[ \t]*([^)\n]*)")
   (cond
    ((looking-at "\\(program\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
     (list (match-string 1) (match-string 2)))
-   ((looking-at "\\(module[ \t]+procedure\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
-    (list (match-string 1) (match-string 2)))
-   ((looking-at "\\(module\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
+   ((and (not (looking-at "module[ \t]+procedure\\_>"))
+         (looking-at "\\(module\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>"))
     (list (match-string 1) (match-string 2)))
    ((looking-at "\\(submodule\\)[ \t]*([^)\n]+)[ \t]*\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
     (list (match-string 1) (match-string 2)))
@@ -2177,7 +2176,7 @@ Like `join-line', but handles F90 syntax."
       (deactivate-mark))))
 
 (defconst f90-end-block-optional-name
-  '("program" "module procedure" "module" "subroutine" "function" "type")
+  '("program" "module" "subroutine" "function" "type")
   "Block types where including the name in the end statement is optional.")
 
 (defun f90-block-match (beg-block beg-name end-block end-name)
