@@ -1369,7 +1369,7 @@ write\\)[ \t]*([^)\n]*)")
   (cond
    ((looking-at "\\(program\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
     (list (match-string 1) (match-string 2)))
-   ((and (not (looking-at "module[ \t]+procedure\\_>"))
+   ((and (not (looking-at-p "module[ \t]+procedure\\_>"))
          (looking-at "\\(module\\)[ \t]+\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>"))
     (list (match-string 1) (match-string 2)))
    ((looking-at "\\(submodule\\)[ \t]*([^)\n]+)[ \t]*\\(\\(?:\\sw\\|\\s_\\)+\\)\\_>")
