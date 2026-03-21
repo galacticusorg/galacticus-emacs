@@ -1173,6 +1173,7 @@ with no args, if that value is non-nil."
   (set (make-local-variable 'comment-indent-function) 'f90-comment-indent)
   (set (make-local-variable 'abbrev-all-caps) t)
   (set (make-local-variable 'normal-auto-fill-function) 'f90-do-auto-fill)
+  (set (make-local-variable 'fill-paragraph-function) 'f90plus-fill-paragraph)
   (setq indent-tabs-mode nil)           ; auto buffer local
   (set (make-local-variable 'font-lock-defaults)
        '((f90-font-lock-keywords f90-font-lock-keywords-1
@@ -2105,6 +2106,33 @@ is non-nil, call `f90-update-line' after inserting the continuation marker."
       (backward-char)
       (or (looking-at f90-no-break-re)
         (forward-char)))))
+
+(defun f90plus-fill-paragraph (&optional justify)
+  "Fill paragraph, respecting !!{ / !!} and !![ / !!] as hard boundaries.
+When point is inside an embedded LaTeX or XML block, narrow the
+buffer to the block content (i.e. the lines between the opening and
+closing delimiters) before calling the default `fill-paragraph'
+logic.  This prevents the delimiter lines from being pulled into the
+paragraph or reformatted.  Returns non-nil when inside such a block
+so that `fill-paragraph' knows the job is done; returns nil otherwise
+to let the default behaviour take over."
+  (when (f90-in-embedded)
+    (save-restriction
+      (let (start end)
+        ;; Move to the line after the opening delimiter.
+        (save-excursion
+          (re-search-backward "^[ \t]*!!\\({\\|\\[\\)" nil t)
+          (forward-line 1)
+          (setq start (point)))
+        ;; Move to the line of the closing delimiter.
+        (save-excursion
+          (re-search-forward "^[ \t]*!!\\(}\\|\\]\\)" nil t)
+          (beginning-of-line)
+          (setq end (point)))
+        (narrow-to-region start end)
+        (let ((fill-paragraph-function nil))
+          (fill-paragraph justify))))
+    t))
 
 (defun f90-do-auto-fill ()
   "Break line if non-white characters beyond `fill-column'.
