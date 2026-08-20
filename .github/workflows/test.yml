@@ -9,9 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: purcell/setup-emacs@master
-        with:
-          version: '30.1'
+      # Emacs straight from the distribution rather than a third-party setup
+      # action: the suite uses nothing newer than Emacs 26, so whatever Ubuntu
+      # ships is enough, and there is one less moving part.
+      - name: Install Emacs
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y emacs-nox
       - name: Run tests
         run: |
           emacs -Q --batch -L . -l galacticus-docs-tests.el \

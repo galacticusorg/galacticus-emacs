@@ -27,6 +27,9 @@
 
 (require 'cl-lib)
 (require 'browse-url)
+;; `url-hexify-string'. It arrives transitively via `browse-url' today, but a
+;; transitive require is not a guarantee -- ask for it outright.
+(require 'url-util)
 
 (defgroup galacticus-docs nil
   "Jump to the Galacticus documentation for the class at point."
