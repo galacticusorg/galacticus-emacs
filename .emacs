@@ -10,6 +10,10 @@
 (add-to-list 'load-path "~/.emacs.d/progmodes/")
 (require 'f90plus)
 (require 'outline-f90)
+(require 'galacticus-docs)
+;; C-c C-g opens the documentation for the functionClass at point, in both
+;; source files and parameter files.
+(galacticus-docs-setup)
 (require 'package)
 (setq package-archives
       '(("melpa" . "https://melpa.org/packages/")
